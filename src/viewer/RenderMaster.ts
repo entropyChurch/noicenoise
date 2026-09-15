@@ -1,7 +1,0 @@
-class RenderMaster
-{
-    constructor()
-    {
-        
-    }
-}
