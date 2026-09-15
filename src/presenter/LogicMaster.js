@@ -23,11 +23,11 @@ export class LogicMaster
 
         // Do all the game logic
         
-        
+
 
 
         // Render the current gamestate
-
+        this.#viewer.render();
 
 
         // Request the next frame

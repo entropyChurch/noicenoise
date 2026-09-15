@@ -2,6 +2,7 @@ export class DataMaster
 {
     #logicalWidth;
     #logicalHeight;
+    #objectList;
 
     constructor(logicalWidth, logicalHeight)
     {
