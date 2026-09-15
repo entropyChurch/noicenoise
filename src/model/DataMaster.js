@@ -1,7 +1,11 @@
 export class DataMaster
 {
-    constructor()
-    {
+    #logicalWidth;
+    #logicalHeight;
 
+    constructor(logicalWidth, logicalHeight)
+    {
+        this.#logicalWidth = logicalWidth;
+        this.#logicalHeight = logicalHeight;
     }
 }

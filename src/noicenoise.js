@@ -6,11 +6,11 @@ function main()
 {
     // Settings
     const canvasName = "noicenoise";
-    const gameWidth = 0;
-    const gameHeight = 0;
+    const logicalWidth = 1280;
+    const logicalHeight = 720;
 
     // Construct the MVP-Link
-    const model = new DataMaster();
+    const model = new DataMaster(logicalWidth, logicalHeight);
     const viewer  = new RenderMaster(document.getElementById(canvasName));
     const presenter = new LogicMaster(model, viewer);
 
