@@ -1,4 +1,4 @@
-class RenderMaster
+export class RenderMaster
 {
     #canvas;
     

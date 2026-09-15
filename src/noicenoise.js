@@ -1,3 +1,7 @@
+import { DataMaster } from "./model/DataMaster.js";
+import { RenderMaster } from "./viewer/RenderMaster.js";
+import { LogicMaster } from "./presenter/LogicMaster.js";
+
 function main()
 {
     // Settings

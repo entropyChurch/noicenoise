@@ -1,4 +1,4 @@
-class LogicMaster
+export class LogicMaster
 {
     #model;
     #viewer;

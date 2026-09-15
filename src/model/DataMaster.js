@@ -1,4 +1,4 @@
-class DataMaster
+export class DataMaster
 {
     constructor()
     {
