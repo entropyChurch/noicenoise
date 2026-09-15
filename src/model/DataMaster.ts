@@ -1,0 +1,7 @@
+class DataMaster
+{
+    constructor()
+    {
+
+    }
+}
