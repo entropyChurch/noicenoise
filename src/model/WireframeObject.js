@@ -10,7 +10,7 @@ export class WireframeObject
     #orientation;
     #objectPositionX;
     #objectPositionY;
-    #coordinateList
+    #coordinateList = new Array();
 
     constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, autoComplete)
     {
@@ -28,5 +28,24 @@ export class WireframeObject
         const coordinate = new Coordinate(positionX, positionY);
         this.#coordinateList.push(coordinate);
     };
+
+    clearCoordinates()
+    {
+        this.#coordinateList.length = [];
+    }
+
+    getCoordinateList()
+    {
+        return this.#coordinateList;
+    }
+
+    makeRectangle(rectangleWidth, rectangleHeight)
+    {
+        this.clearCoordinates();
+        this.addCoordinate(this.#objectPositionX, this.#objectPositionY);
+        this.addCoordinate(rectangleWidth, this.#objectPositionY);
+        this.addCoordinate(rectangleWidth, rectangleHeight);
+        this.addCoordinate(this.#objectPositionX, rectangleHeight);
+    }
 }
 

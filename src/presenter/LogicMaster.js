@@ -27,7 +27,7 @@ export class LogicMaster
 
 
         // Render the current gamestate
-        this.#viewer.render();
+        this.#viewer.render(this.#model.getWireframeObjectList());
 
 
         // Request the next frame
