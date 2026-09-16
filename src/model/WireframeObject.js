@@ -10,6 +10,7 @@ export class WireframeObject
     #orientation;
     #objectPositionX;
     #objectPositionY;
+    #color;
     #coordinateList = new Array();
 
     constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, autoComplete)
@@ -37,6 +38,11 @@ export class WireframeObject
     getCoordinateList()
     {
         return this.#coordinateList;
+    }
+
+    getColor()
+    {
+        return this.#color();
     }
 
     makeRectangle(rectangleWidth, rectangleHeight)
