@@ -33,12 +33,12 @@ export class RenderMaster
 
     renderWireframes(wireframeList)
     {
-        this.#canvasContext.strokeStyle = "white";
         this.#canvasContext.lineWidth = 1;
         this.#canvasContext.imageSmoothingEnabled = false;
 
         for (const wireframeObject of wireframeList)
             {
+                this.#canvasContext.strokeStyle = wireframeObject.getColor();
                 const coordinateList = wireframeObject.getCoordinateList();
                 const firstCoordinate = coordinateList[0];
                 const lastCoordinate = coordinateList[coordinateList.length - 1];

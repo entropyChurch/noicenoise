@@ -20,7 +20,7 @@ export class WireframeObject
         this.#speedX = speedX;
         this.#speedY = speedY;
         this.#orientation = orientation;
-        this.#color = this.#color;
+        this.#color = color;
     }
 
     addCoordinate(positionX, positionY)
@@ -41,16 +41,21 @@ export class WireframeObject
 
     getColor()
     {
-        return this.#color();
+        return this.#color;
     }
 
     makeRectangle(rectangleWidth, rectangleHeight)
     {
         this.clearCoordinates();
         this.addCoordinate(this.#objectPositionX, this.#objectPositionY);
-        this.addCoordinate(rectangleWidth, this.#objectPositionY);
-        this.addCoordinate(rectangleWidth, rectangleHeight);
-        this.addCoordinate(this.#objectPositionX, rectangleHeight);
+        this.addCoordinate(this.#objectPositionX + rectangleWidth, this.#objectPositionY);
+        this.addCoordinate(this.#objectPositionX + rectangleWidth, this.#objectPositionY + rectangleHeight);
+        this.addCoordinate(this.#objectPositionX, this.#objectPositionY + rectangleHeight);
+    }
+
+    makePlayer()
+    {
+        this.addCoordinate(this.#objectPositionX, this.#objectPositionY)
     }
 }
 
