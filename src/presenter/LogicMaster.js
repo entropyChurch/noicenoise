@@ -1,4 +1,5 @@
 import { WireframeObject } from "../model/WireframeObject.js";
+import { Player } from "../model/Player.js";
 
 export class LogicMaster
 {
@@ -30,7 +31,7 @@ export class LogicMaster
 
 
         // Render the current gamestate
-        this.#viewer.render(this.#model.getWireframeObjectList());
+        this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer().getWireframe());
 
 
         // Request the next frame
@@ -46,8 +47,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const wireframeObject = new WireframeObject(0,0,0,0,0,"white");
-        wireframeObject.makeRectangle(100,100);
-        this.#model.addWireframeObject(wireframeObject);
+        const player = new Player();
+        this.#model.setPlayer(player);
     }
 }

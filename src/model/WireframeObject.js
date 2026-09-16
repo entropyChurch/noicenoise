@@ -56,6 +56,9 @@ export class WireframeObject
     makePlayer()
     {
         this.addCoordinate(this.#objectPositionX, this.#objectPositionY)
+        this.addCoordinate(this.#objectPositionX + 25, this.#objectPositionY + 60)
+        this.addCoordinate(this.#objectPositionX + 50, this.#objectPositionY)
+        this.addCoordinate(this.#objectPositionX + 25, this.#objectPositionY + 15)
     }
 }
 
