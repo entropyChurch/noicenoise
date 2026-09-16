@@ -13,15 +13,14 @@ export class WireframeObject
     #color;
     #coordinateList = new Array();
 
-    constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, autoComplete)
+    constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, color)
     {
-        this.#autoComplete = autoComplete;
         this.#objectPositionX = objectPositionX;
         this.#objectPositionY = objectPositionY;
         this.#speedX = speedX;
         this.#speedY = speedY;
         this.#orientation = orientation;
-        autoComplete = true;
+        this.#color = this.#color;
     }
 
     addCoordinate(positionX, positionY)

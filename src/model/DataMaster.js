@@ -1,5 +1,3 @@
-import { WireframeObject } from "./WireframeObject.js";
-
 export class DataMaster
 {
     #logicalWidth;
@@ -10,11 +8,16 @@ export class DataMaster
     {   
         this.#logicalWidth = logicalWidth;
         this.#logicalHeight = logicalHeight;
-        this.#wireframeObjectList.push(new WireframeObject(0,0));
     }
 
     getWireframeObjectList()
     {
         return this.#wireframeObjectList;
     }
+
+    addWireframeObject(wireframeObject)
+    {
+        this.#wireframeObjectList.push(wireframeObject);
+    }
+
 }

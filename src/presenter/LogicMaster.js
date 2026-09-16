@@ -1,3 +1,5 @@
+import { WireframeObject } from "../model/WireframeObject.js";
+
 export class LogicMaster
 {
     #model;                 //  Holds the game state
@@ -10,6 +12,7 @@ export class LogicMaster
     {
         this.#model = model;
         this.#viewer = viewer;
+        this.prepareStage();
         this.previousTime = performance.now();
     }
 
@@ -39,5 +42,12 @@ export class LogicMaster
         const deltaTime = this.deltaTime = (currentTime - this.#previousTime) / 1000
         this.#previousTime = currentTime;
         return deltaTime;
+    }
+
+    prepareStage()
+    {
+        const wireframeObject = new WireframeObject(0,0,0,0,0,"white");
+        wireframeObject.makeRectangle(100,100);
+        this.#model.addWireframeObject(wireframeObject);
     }
 }
