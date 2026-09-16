@@ -1,8 +1,10 @@
+import { WireframeObject } from "./WireframeObject.js";
+
 export class DataMaster
 {
     #logicalWidth;
     #logicalHeight;
-    #objectList;
+    #wireFrameObjectList;
 
     constructor(logicalWidth, logicalHeight)
     {

@@ -26,7 +26,7 @@ export class RenderMaster
 
     fillBackground()
     {
-        this.#canvasContext.fillStyle = "#301878";
+        this.#canvasContext.fillStyle = "#0d0329";
         this.#canvasContext.fillRect(0, 0, this.#canvasWidth, this.#canvasHeight);
     }
 }

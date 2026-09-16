@@ -1,3 +1,5 @@
+import { Coordinate } from "./Coordinate.js";
+
 export class WireframeObject
 {
 
@@ -6,16 +8,25 @@ export class WireframeObject
     #speedX;
     #speedY;
     #orientation;
-    #positionX;
-    #positionY;
+    #objectPositionX;
+    #objectPositionY;
+    #coordinateList
 
-    constructor()
+    constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, autoComplete)
     {
-
+        this.#autoComplete = autoComplete;
+        this.#objectPositionX = objectPositionX;
+        this.#objectPositionY = objectPositionY;
+        this.#speedX = speedX;
+        this.#speedY = speedY;
+        this.#orientation = orientation;
+        autoComplete = true;
     }
 
-    addCoordinate()
+    addCoordinate(positionX, positionY)
     {
-        
+        const coordinate = new Coordinate(positionX, positionY);
+        this.#coordinateList.push(coordinate);
     };
 }
+
