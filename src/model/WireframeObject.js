@@ -3,24 +3,19 @@ import { Coordinate } from "./Coordinate.js";
 export class WireframeObject
 {
 
-    #coordinates;
-    #autoComplete;
-    #speedX;
-    #speedY;
-    #orientation;
+    #velocity;
     #objectPositionX;
     #objectPositionY;
     #color;
-    #coordinateList = new Array();
+    #coordinateList;
 
-    constructor(objectPositionX, objectPositionY, speedX, speedY, orientation, color)
+    constructor(objectPositionX, objectPositionY, velocity, color)
     {
         this.#objectPositionX = objectPositionX;
         this.#objectPositionY = objectPositionY;
-        this.#speedX = speedX;
-        this.#speedY = speedY;
-        this.#orientation = orientation;
+        this.#velocity = velocity;
         this.#color = color;
+        this.#coordinateList = new Array;
     }
 
     addCoordinate(positionX, positionY)
@@ -44,6 +39,16 @@ export class WireframeObject
         return this.#color;
     }
 
+    getObjectPositionX()
+    {
+        return this.#objectPositionX;
+    }
+
+    getObjectPositionY()
+    {
+        return this.#objectPositionY;
+    }
+
     makeRectangle(rectangleWidth, rectangleHeight)
     {
         this.clearCoordinates();
@@ -53,12 +58,5 @@ export class WireframeObject
         this.addCoordinate(this.#objectPositionX, this.#objectPositionY + rectangleHeight);
     }
 
-    makePlayer()
-    {
-        this.addCoordinate(this.#objectPositionX, this.#objectPositionY)
-        this.addCoordinate(this.#objectPositionX + 25, this.#objectPositionY + 60)
-        this.addCoordinate(this.#objectPositionX + 50, this.#objectPositionY)
-        this.addCoordinate(this.#objectPositionX + 25, this.#objectPositionY + 15)
-    }
 }
 

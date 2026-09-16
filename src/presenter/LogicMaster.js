@@ -31,7 +31,7 @@ export class LogicMaster
 
 
         // Render the current gamestate
-        this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer().getWireframe());
+        this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
 
 
         // Request the next frame
@@ -47,7 +47,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player();
+        const player = new Player(0,0,0,"green",100);
         this.#model.setPlayer(player);
     }
 }

@@ -28,7 +28,7 @@ export class RenderMaster
 
     fillBackground()
     {
-        this.#canvasContext.fillStyle = "#0d0329";
+        this.#canvasContext.fillStyle = "#0a0715";
         this.#canvasContext.fillRect(0, 0, this.#canvasWidth, this.#canvasHeight);
     }
 
@@ -61,14 +61,14 @@ export class RenderMaster
             }
     }
 
-    renderPlayer(playerWireframe)
+    renderPlayer(player)
     {
 
         this.#canvasContext.lineWidth = 1;
         this.#canvasContext.imageSmoothingEnabled = false;
 
-        this.#canvasContext.strokeStyle = playerWireframe.getColor();
-        const coordinateList = playerWireframe.getCoordinateList();
+        this.#canvasContext.strokeStyle = player.getColor();
+        const coordinateList = player.getCoordinateList();
         const firstCoordinate = coordinateList[0];
         const lastCoordinate = coordinateList[coordinateList.length - 1];
             for (let i = 1 ; i < coordinateList.length; i++)

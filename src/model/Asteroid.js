@@ -1,6 +1,6 @@
 import { WireframeObject } from "./WireframeObject.js";
 
-export class Player extends WireframeObject
+export class Asteroid extends WireframeObject
 {
 
     #health;
@@ -12,12 +12,11 @@ export class Player extends WireframeObject
         this.makePlayer();
     }
 
-    makePlayer()
+    makeAsteroid()
     {
         this.addCoordinate(this.getObjectPositionX(), this.getObjectPositionY())
         this.addCoordinate(this.getObjectPositionX()+ 25, this.getObjectPositionY() + 60)
         this.addCoordinate(this.getObjectPositionX()+ 50, this.getObjectPositionY())
         this.addCoordinate(this.getObjectPositionX()+ 25, this.getObjectPositionY() + 15)
     }
-
 }
