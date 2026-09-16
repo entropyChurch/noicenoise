@@ -4,6 +4,11 @@ export class Player
 {
 
     #wireframe;
+    #health;
+    #positionX;
+    #positionY;
+    #orientation;
+    #velocity;
 
     constructor()
     {
