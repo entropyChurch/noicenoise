@@ -3,19 +3,27 @@ import { Coordinate } from "./Coordinate.js";
 export class WireframeObject
 {
 
-    #velocity;
+    #velocityX;
+    #velocityY;
     #objectPositionX;
     #objectPositionY;
     #color;
     #coordinateList;
 
-    constructor(objectPositionX, objectPositionY, velocity, color)
+    constructor(objectPositionX, objectPositionY, velocityX, velocityY, color)
     {
         this.#objectPositionX = objectPositionX;
         this.#objectPositionY = objectPositionY;
-        this.#velocity = velocity;
+        this.#velocityX = velocityX;
+        this.#velocityY = velocityY;
         this.#color = color;
         this.#coordinateList = new Array;
+    }
+
+    update(deltaTime)
+    {
+        this.#objectPositionX += this.#velocityX * deltaTime;
+        this.#objectPositionY += this.#velocityY * deltaTime;
     }
 
     addCoordinate(positionX, positionY)
@@ -47,15 +55,6 @@ export class WireframeObject
     getObjectPositionY()
     {
         return this.#objectPositionY;
-    }
-
-    makeRectangle(rectangleWidth, rectangleHeight)
-    {
-        this.clearCoordinates();
-        this.addCoordinate(this.#objectPositionX, this.#objectPositionY);
-        this.addCoordinate(this.#objectPositionX + rectangleWidth, this.#objectPositionY);
-        this.addCoordinate(this.#objectPositionX + rectangleWidth, this.#objectPositionY + rectangleHeight);
-        this.addCoordinate(this.#objectPositionX, this.#objectPositionY + rectangleHeight);
     }
 
 }

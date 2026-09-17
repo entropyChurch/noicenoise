@@ -5,15 +5,16 @@ export class Player extends WireframeObject
 
     #health;
 
-    constructor(positionX, positionY, velocity, color, health)
+    constructor(positionX, positionY, velocityX, velocityY, color, health)
     {
-        super(positionX, positionY, velocity, color);
+        super(positionX, positionY, velocityX, velocityY, color);
         this.#health = health;
-        this.makePlayer();
     }
 
-    makePlayer()
-    {
+    updatePlayer(deltaTime)
+    {   
+        this.update(deltaTime);
+        this.clearCoordinates();
         this.addCoordinate(this.getObjectPositionX(), this.getObjectPositionY())
         this.addCoordinate(this.getObjectPositionX()+ 25, this.getObjectPositionY() + 60)
         this.addCoordinate(this.getObjectPositionX()+ 50, this.getObjectPositionY())

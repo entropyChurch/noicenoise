@@ -14,7 +14,7 @@ export class LogicMaster
         this.#model = model;
         this.#viewer = viewer;
         this.prepareStage();
-        this.previousTime = performance.now();
+        this.#previousTime = performance.now();
     }
 
     // Main function that gets executed for every frame
@@ -23,12 +23,8 @@ export class LogicMaster
         //Calculate delta time in seconds
         this.#deltaTime = this.calculateDeltaTime(performance.now())
 
-
-
         // Do all the game logic
-        
-
-
+        this.#model.getPlayer().updatePlayer(this.#deltaTime);
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
@@ -47,7 +43,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(0,0,0,"green",100);
+        const player = new Player(0,0,10,10,"green",100);
         this.#model.setPlayer(player);
     }
 }
