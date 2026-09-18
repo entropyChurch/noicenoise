@@ -8,6 +8,13 @@ export class LogicMaster
     #previousTime;          //  Time of the previous frame
     #currentTime;           //  Time of the current frame
     #deltaTime;             //  Delta of last and current frame
+    #keys = 
+    {
+        w: false,
+        a: false,
+        s: false,
+        d: false
+    };
 
     constructor(model, viewer, canvas)
     {
@@ -52,11 +59,40 @@ export class LogicMaster
         this.#model.setPlayer(player);
     }
 
+    calculatePlayeMovementVector()
+    {
+        let x = 0;
+        let y = 0;
+
+        if (this.#keys.w)
+            y -= 1;
+
+        if (this.#keys.s)
+            y += 1;
+
+        if (this.#keys.a)
+            x -= 1;
+
+        if (this.#keys.d)
+            x += 1;
+
+        return { x, y };
+    }
+
     addKeyInputListeners()
     {
         window.addEventListener("keydown", (event) => 
             {
-                console.log(event.key);
+                if (event.key in this.#keys)
+                    this.#keys[event.key] = true;
+                this.#model.getPlayer.setIntendedMovementVector(this.calculatePlayerMovementVector())
+            })
+
+        window.addEventListener("keyup", (event) => 
+            {
+                if (event.key in this.#keys)
+                    this.#keys[event.key] = false;
+                this.#model.getPlayer.setIntendedMovementVector(this.calculatePlayerMovementVector())
             })
     }
 }
