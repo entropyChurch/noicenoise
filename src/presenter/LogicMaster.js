@@ -84,16 +84,16 @@ export class LogicMaster
             {
                 if (event.key in this.#keys)
                     this.#keys[event.key] = true;
-                moveVector = this.calculatePlayeMovementVector();
-                this.#model.getPlayer.setIntendedMovementVector(moveVector.x, moveVector.y)
+                const moveVector = this.calculatePlayerMovementVector();
+                this.#model.getPlayer().setInputMovementVector(moveVector.x, moveVector.y)
             })
 
         window.addEventListener("keyup", (event) => 
             {
                 if (event.key in this.#keys)
                     this.#keys[event.key] = false;
-                moveVector = this.calculatePlayeMovementVector();
-                this.#model.getPlayer.setIntendedMovementVector(moveVector.x, moveVector.y)
+                const moveVector = this.calculatePlayerMovementVector();
+                this.#model.getPlayer().setInputMovementVector(moveVector.x, moveVector.y)
             })
     }
 }

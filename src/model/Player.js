@@ -15,9 +15,11 @@ export class Player extends WireframeObject
         this.addCoordinate(this.getObjectPositionX() + 30, this.getObjectPositionY() + 20);
         this.addCoordinate(this.getObjectPositionX(), this.getObjectPositionY());
         this.addCoordinate(this.getObjectPositionX() - 30, this.getObjectPositionY() + 20);
+        this.#targetVelocityX = 0;
+        this.#targetVelocityY = 0;
     }
 
-    setIndendedMovementVector(targetVelocityX, targetvelocityY)
+    setInputMovementVector(targetVelocityX, targetVelocityY)
     {
         this.#targetVelocityX = targetVelocityX;
         this.#targetVelocityY = targetVelocityY;
