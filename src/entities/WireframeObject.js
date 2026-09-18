@@ -9,7 +9,7 @@ export class WireframeObject
     #objectPositionY;
     #color;
     #coordinateList;
-    #rotation;
+
 
     constructor(objectPositionX, objectPositionY, velocityX, velocityY, color)
     {
@@ -18,99 +18,56 @@ export class WireframeObject
         this.#velocityX = velocityX;
         this.#velocityY = velocityY;
         this.#color = color;
-        this.#rotation = -Math.PI / 2;
         this.#coordinateList = new Array;
     }
 
     update(deltaTime)
     {
         this.calculateVelocity(deltaTime)
-        this.rotateObject()
+        this.rotateObject(deltaTime)
         this.updatePosition(deltaTime)
     }
 
     calculateVelocity(deltaTime)
     {
-
+        // Implemented at specific entity level
     }
 
-    rotateObject()
+    rotateObject(deltaTime)
     {
-        if (this.#velocityX === 0 && this.#velocityY === 0)
-            return;
+        // Implemented at specific entity level
+    }   
 
-        const newRotation = Math.atan2(this.#velocityY, this.#velocityX);
+    updatePosition(deltaTime)
+    {
+        const deltaX = this.#velocityX * deltaTime;
+        const deltaY = this.#velocityY * deltaTime;
 
-        let rotationDelta = newRotation - this.#rotation;
-
-        if (rotationDelta > Math.PI)
-        {
-            rotationDelta -= Math.PI * 2;
-        }
-
-        if (rotationDelta < -Math.PI)
-        {
-            rotationDelta += Math.PI * 2;
-        }
-
-        const cos = Math.cos(rotationDelta);
-        const sin = Math.sin(rotationDelta);
+        this.#objectPositionX += deltaX;
+        this.#objectPositionY += deltaY;
 
         for (const coordinate of this.#coordinateList)
         {
-            // Translate point so object position becomes (0, 0)
-            const x =
-                coordinate.getPositionX() -
-                this.#objectPositionX;
-
-            const y =
-                coordinate.getPositionY() -
-                this.#objectPositionY;
-
-            // Rotate around (0, 0)
-            const rotatedX = x * cos - y * sin;
-            const rotatedY = x * sin + y * cos;
-
-            // Translate back
             coordinate.setPositionX(
-                rotatedX + this.#objectPositionX
+                coordinate.getPositionX() + deltaX
             );
 
             coordinate.setPositionY(
-                rotatedY + this.#objectPositionY
+                coordinate.getPositionY() + deltaY
             );
         }
-
-        this.#rotation = newRotation;
-    }   
-
-
-    updatePosition(deltaTime)
-{
-    const deltaX = this.#velocityX * deltaTime;
-    const deltaY = this.#velocityY * deltaTime;
-
-    this.#objectPositionX += deltaX;
-    this.#objectPositionY += deltaY;
-
-    for (const coordinate of this.#coordinateList)
-    {
-        coordinate.setPositionX(
-            coordinate.getPositionX() + deltaX
-        );
-
-        coordinate.setPositionY(
-            coordinate.getPositionY() + deltaY
-        );
     }
-    }
-
 
     addCoordinate(positionX, positionY)
     {
         const coordinate = new Coordinate(positionX, positionY);
         this.#coordinateList.push(coordinate);
     };
+
+    getCoordinateList()
+    {
+        return this.#coordinateList;
+    }
 
     clearCoordinates()
     {
@@ -127,9 +84,19 @@ export class WireframeObject
         return this.#color;
     }
 
+    setColor(color)
+    {
+        this.#color = color;
+    }
+
     getObjectPositionX()
     {
         return this.#objectPositionX;
+    }
+
+    setObjectPositionX(objectPositionX)
+    {
+        this.#objectPositionX = objectPositionX;
     }
 
     getObjectPositionY()
@@ -137,5 +104,29 @@ export class WireframeObject
         return this.#objectPositionY;
     }
 
+    setObjectoPositonY(objectPositionY)
+    {
+        this.#objectPositionY = objectPositionY;
+    }
+
+    getVelocityX()
+    {
+        return this.#velocityX;
+    }
+
+    setVelocityX(velocityX)
+    {
+        this.#velocityX = velocityX;
+    }
+
+    getVelocityY()
+    {
+        return this.#velocityY;
+    }
+
+    setVelocityY(velocityY)
+    {
+        this.#velocityY = velocityY;
+    }
 }
 
