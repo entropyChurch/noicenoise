@@ -1,5 +1,5 @@
-import { WireframeObject } from "../model/WireframeObject.js";
-import { Player } from "../model/Player.js";
+import { WireframeObject } from "../entities/WireframeObject.js";
+import { Player } from "../entities/Player.js";
 
 export class LogicMaster
 {

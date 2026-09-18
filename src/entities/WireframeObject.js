@@ -1,4 +1,4 @@
-import { Coordinate } from "./Coordinate.js";
+import { Coordinate } from "../model/Coordinate.js";
 
 export class WireframeObject
 {
@@ -24,12 +24,12 @@ export class WireframeObject
 
     update(deltaTime)
     {
-        this.calculateVelocity()
+        this.calculateVelocity(deltaTime)
         this.rotateObject()
         this.updatePosition(deltaTime)
     }
 
-    calculateVelocity()
+    calculateVelocity(deltaTime)
     {
 
     }
@@ -85,7 +85,7 @@ export class WireframeObject
     }   
 
 
-updatePosition(deltaTime)
+    updatePosition(deltaTime)
 {
     const deltaX = this.#velocityX * deltaTime;
     const deltaY = this.#velocityY * deltaTime;
@@ -103,7 +103,7 @@ updatePosition(deltaTime)
             coordinate.getPositionY() + deltaY
         );
     }
-}
+    }
 
 
     addCoordinate(positionX, positionY)

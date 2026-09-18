@@ -25,4 +25,9 @@ export class Player extends WireframeObject
         this.#targetVelocityY = targetVelocityY;
     }
 
+    calculateVelocity(deltaTime)
+    {
+
+    }
+
 }
