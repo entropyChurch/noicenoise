@@ -24,7 +24,7 @@ export class LogicMaster
         this.#deltaTime = this.calculateDeltaTime(performance.now())
 
         // Do all the game logic
-        this.#model.getPlayer().updatePlayer(this.#deltaTime);
+        this.#model.getPlayer().update(this.#deltaTime);
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
@@ -43,7 +43,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(0,0,10,10,"green",100);
+        const player = new Player(250,250,10,10,"green",100);
         this.#model.setPlayer(player);
     }
 }
