@@ -14,8 +14,6 @@ function main()
     const viewer  = new RenderMaster(document.getElementById(canvasName));
     const presenter = new LogicMaster(model, viewer);
 
-    // Start the recursive game loop
-    requestAnimationFrame(() => presenter.frame());
 }
 
 main();

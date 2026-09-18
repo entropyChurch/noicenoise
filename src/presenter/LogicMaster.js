@@ -9,12 +9,17 @@ export class LogicMaster
     #currentTime;           //  Time of the current frame
     #deltaTime;             //  Delta of last and current frame
 
-    constructor(model, viewer)
+    constructor(model, viewer, canvas)
     {
+        //Kindly doing the needful
         this.#model = model;
         this.#viewer = viewer;
         this.prepareStage();
         this.#previousTime = performance.now();
+        this.addKeyInputListeners();
+
+        // Start the recursive game loop
+        requestAnimationFrame(() => this.frame());
     }
 
     // Main function that gets executed for every frame
@@ -45,5 +50,13 @@ export class LogicMaster
     {
         const player = new Player(250,250,10,10,"green",100);
         this.#model.setPlayer(player);
+    }
+
+    addKeyInputListeners()
+    {
+        window.addEventListener("keydown", (event) => 
+            {
+                console.log(event.key);
+            })
     }
 }
