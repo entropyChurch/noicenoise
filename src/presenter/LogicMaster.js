@@ -6,7 +6,6 @@ export class LogicMaster
     #model;                 //  Holds the game state
     #viewer;                //  Holds the canvas and render functions
     #previousTime;          //  Time of the previous frame
-    #currentTime;           //  Time of the current frame
     #deltaTime;             //  Delta of last and current frame
     #keys = 
     {
@@ -59,7 +58,7 @@ export class LogicMaster
         this.#model.setPlayer(player);
     }
 
-    calculatePlayeMovementVector()
+    calculatePlayerMovementVector()
     {
         let x = 0;
         let y = 0;
@@ -85,14 +84,16 @@ export class LogicMaster
             {
                 if (event.key in this.#keys)
                     this.#keys[event.key] = true;
-                this.#model.getPlayer.setIntendedMovementVector(this.calculatePlayerMovementVector())
+                moveVector = this.calculatePlayeMovementVector();
+                this.#model.getPlayer.setIntendedMovementVector(moveVector.x, moveVector.y)
             })
 
         window.addEventListener("keyup", (event) => 
             {
                 if (event.key in this.#keys)
                     this.#keys[event.key] = false;
-                this.#model.getPlayer.setIntendedMovementVector(this.calculatePlayerMovementVector())
+                moveVector = this.calculatePlayeMovementVector();
+                this.#model.getPlayer.setIntendedMovementVector(moveVector.x, moveVector.y)
             })
     }
 }

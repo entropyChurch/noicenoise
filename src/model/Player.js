@@ -4,7 +4,8 @@ export class Player extends WireframeObject
 {
 
     #health;
-    #intendeMovementVector;
+    #targetVelocityX;
+    #targetVelocityY;
 
     constructor(positionX, positionY, velocityX, velocityY, color, health)
     {
@@ -16,9 +17,10 @@ export class Player extends WireframeObject
         this.addCoordinate(this.getObjectPositionX() - 30, this.getObjectPositionY() + 20);
     }
 
-    setIndendedMovementVector(vector)
+    setIndendedMovementVector(targetVelocityX, targetvelocityY)
     {
-
+        this.#targetVelocityX = targetVelocityX;
+        this.#targetVelocityY = targetVelocityY;
     }
 
 }
