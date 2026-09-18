@@ -54,7 +54,8 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(250,250,10,10,"green",100);
+        const player = new Player(250, 250, 1, 0, "green", 100, 100);
+        player.setSpeed(500);
         this.#model.setPlayer(player);
     }
 

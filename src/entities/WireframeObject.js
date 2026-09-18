@@ -3,32 +3,48 @@ import { Coordinate } from "../model/Coordinate.js";
 export class WireframeObject
 {
 
-    #velocityX;
-    #velocityY;
+    #directionX;
+    #directionY;
     #objectPositionX;
     #objectPositionY;
     #color;
     #coordinateList;
+    #speed;
 
 
-    constructor(objectPositionX, objectPositionY, velocityX, velocityY, color)
+    constructor(objectPositionX, objectPositionY, directionX, directionY, color)
     {
         this.#objectPositionX = objectPositionX;
         this.#objectPositionY = objectPositionY;
-        this.#velocityX = velocityX;
-        this.#velocityY = velocityY;
+
+        // Normalize the direction vector
+        const magnitude = Math.hypot(directionX, directionY);
+        if (magnitude > 0)
+        {
+            this.#directionX = directionX / magnitude;
+            this.#directionY = directionY / magnitude;
+        }
+        else
+        {
+            this.#directionX = 0;
+            this.#directionY = 0;
+        }
+        this.#directionX = directionX;
+        this.#directionY = directionY;
+
         this.#color = color;
         this.#coordinateList = new Array;
+        this.#speed = 0;
     }
 
     update(deltaTime)
     {
-        this.calculateVelocity(deltaTime)
+        this.calculateDirection(deltaTime)
         this.rotateObject(deltaTime)
         this.updatePosition(deltaTime)
     }
 
-    calculateVelocity(deltaTime)
+    calculateDirection(deltaTime)
     {
         // Implemented at specific entity level
     }
@@ -40,21 +56,16 @@ export class WireframeObject
 
     updatePosition(deltaTime)
     {
-        const deltaX = this.#velocityX * deltaTime;
-        const deltaY = this.#velocityY * deltaTime;
+        const deltaX = this.#directionX * deltaTime * this.#speed;
+        const deltaY = this.#directionY * deltaTime * this.#speed;
 
         this.#objectPositionX += deltaX;
         this.#objectPositionY += deltaY;
 
         for (const coordinate of this.#coordinateList)
         {
-            coordinate.setPositionX(
-                coordinate.getPositionX() + deltaX
-            );
-
-            coordinate.setPositionY(
-                coordinate.getPositionY() + deltaY
-            );
+            coordinate.setPositionX(coordinate.getPositionX() + deltaX);
+            coordinate.setPositionY(coordinate.getPositionY() + deltaY);
         }
     }
 
@@ -109,24 +120,34 @@ export class WireframeObject
         this.#objectPositionY = objectPositionY;
     }
 
-    getVelocityX()
+    getDirectionX()
     {
-        return this.#velocityX;
+        return this.#directionX;
     }
 
-    setVelocityX(velocityX)
+    setDirectionX(directionX)
     {
-        this.#velocityX = velocityX;
+        this.#directionX = directionX;
     }
 
-    getVelocityY()
+    getDirectionY()
     {
-        return this.#velocityY;
+        return this.#directionY;
     }
 
-    setVelocityY(velocityY)
+    setDirectionY(directionY)
     {
-        this.#velocityY = velocityY;
+        this.#directionY = directionY;
+    }
+
+    setSpeed(speed)
+    {
+        this.#speed = speed;
+    }
+
+    getSpeed()
+    {
+        return this.#speed;
     }
 }
 
