@@ -20,9 +20,9 @@ export class Player extends WireframeObject
         this.#playerInput = playerInput;
     }
 
-    update(deltaTime)
+    update(deltaTime, boundaryX, boundaryY)
     {
-        this.moveObject(deltaTime);
+        this.moveObject(deltaTime, boundaryX, boundaryY);
         this.rotateObject(deltaTime);
         this.updateCoordinates();
     }
@@ -58,11 +58,25 @@ export class Player extends WireframeObject
         }
     }  
 
-    moveObject(deltaTime)
+    moveObject(deltaTime, boundaryX, boundaryY)
     {
         const normalized = this.normalizeVector(this.#playerInput.movementX, this.#playerInput.movementY, "L")
-        this.setObjectPositionX(this.getObjectPositionX() + normalized.x * deltaTime * this.getSpeed());
-        this.setObjectPositionY(this.getObjectPositionY() + normalized.y * deltaTime * this.getSpeed());
+        let speed = this.getSpeed();
+        if (this.#playerInput.boost == true)
+        {
+            speed = speed * 1.5
+        }
+        let calculatedPositionX = this.getObjectPositionX() + normalized.x * deltaTime * speed;
+        let calculatedPositionY = this.getObjectPositionY() + normalized.y * deltaTime * speed;
+        
+        // Bind player to the stage
+        if (calculatedPositionX > boundaryX){calculatedPositionX = boundaryX};
+        if (calculatedPositionX < 0){calculatedPositionX = 0};
+        if (calculatedPositionY > boundaryY){calculatedPositionY = boundaryY};
+        if (calculatedPositionY < 0){calculatedPositionY = 0};
+
+        this.setObjectPositionX(calculatedPositionX);
+        this.setObjectPositionY(calculatedPositionY);
     }   
 
     rotateObject(deltaTime)

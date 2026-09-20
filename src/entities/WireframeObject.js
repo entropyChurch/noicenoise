@@ -27,10 +27,20 @@ export class WireframeObject
         // Implemented at specific entity level
     }
 
+    update(deltaTime, boundaryX, boundaryY)
+    {
+        // Implemented at specific entity level
+    }
+
     rotateObject(deltaTime)
     {
         // Implemented at specific entity level
     }   
+
+    moveObject(deltaTime, boundaryX, boundaryY)
+    {
+        // Implemented at specific entity level
+    }
 
     moveObject(deltaTime)
     {
@@ -55,7 +65,7 @@ export class WireframeObject
 
     updateCoordinates()
     {
-        
+
     }
 
     getColor()

@@ -1,5 +1,6 @@
 import { WireframeObject } from "../entities/WireframeObject.js";
 import { Player } from "../entities/Player.js";
+import { Bullet } from "../entities/Bullet.js";
 
 export class LogicMaster
 {
@@ -43,15 +44,39 @@ export class LogicMaster
     // Main function that gets executed for every frame
     frame()
     {
-        //Calculate delta time in seconds
+        // Calculate delta time in seconds
         this.#deltaTime = this.calculateDeltaTime(performance.now());
 
-        //Get Controller input
+        // Get Controller input
         this.getPlayerInput();
         this.#model.getPlayer().setPlayerInput(this.#gamePadInput);
 
-        // Do all the game logic
-        this.#model.getPlayer().update(this.#deltaTime);
+        // Do all player input actions that or NOT movement
+        if (this.#gamePadInput.shoot)
+        {
+            this.#model.addProjectile
+            (
+                new Bullet
+                (
+                    this.#model.getPlayer().getObjectPositionX(),
+                    this.#model.getPlayer().getObjectPositionY(),
+                    "white",
+                    1000,
+                    this.#model.getPlayer().getCoordinateList()[0].getPositionX(),
+                    this.#model.getPlayer().getCoordinateList()[0].getPositionY(),
+                    "true"
+                )
+            );
+        }
+
+        // Move the player
+        this.#model.getPlayer().update(this.#deltaTime, this.#model.getLogicalWidth(), this.#model.getLogicalHeight());
+
+        // Update all the other objects
+        for (const wireframeObject of this.#model.getWireframeObjectList())
+        {
+            wireframeObject.update(this.#deltaTime);
+        }
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
@@ -69,7 +94,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(0, 0, "white", 100, 100);
+        const player = new Player(0, 0, "white", 100, 150);
         player.setSpeed(500);
         this.#model.setPlayer(player);
     }
@@ -113,107 +138,105 @@ export class LogicMaster
         }
 
         // Get button presses
-        for (let i = 0; i<this.#gamepad.buttons.length; i++)
-        {
-            // GREEN
-            if (this.#gamepad.buttons[0].pressed)
+
+        // GREEN
+        if (this.#gamepad.buttons[0].pressed)
             {
                 this.#gamePadInput.green = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.green = false;
-            }
+        }
 
-            // RED
-            if (this.#gamepad.buttons[1].pressed)
+        // RED
+        if (this.#gamepad.buttons[1].pressed)
             {
                 this.#gamePadInput.red = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.red = false;
-            }
+        }
 
-            // BLUE
-            if (this.#gamepad.buttons[3].pressed)
+        // BLUE
+        if (this.#gamepad.buttons[3].pressed)
             {
                 this.#gamePadInput.blue = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.blue = false;
-            }
+        }
 
-            //YELLOW
-            if (this.#gamepad.buttons[4].pressed)
+        //YELLOW
+        if (this.#gamepad.buttons[4].pressed)
             {
                 this.#gamePadInput.yellow = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.yellow = false;
-            }
+        }
                       
-            // SPECIAL
-            if (this.#gamepad.buttons[6].pressed)
+        // SPECIAL
+        if (this.#gamepad.buttons[6].pressed)
             {
                 this.#gamePadInput.special= true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.special = false;
-            }
+        }
 
-            // SHIELD
-            if (this.#gamepad.buttons[7].pressed)
+        // SHIELD
+        if (this.#gamepad.buttons[7].pressed)
             {
                 this.#gamePadInput.shield = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.shield = false;
-            }
+        }
 
-            // BOOST
-            if (this.#gamepad.buttons[8].pressed)
+        // BOOST
+        if (this.#gamepad.buttons[8].pressed)
             {
                 this.#gamePadInput.boost = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.boost = false;
-            }
+        }
             
-            // SHOOT
-            if (this.#gamepad.buttons[9].pressed)
+        // SHOOT
+        if (this.#gamepad.buttons[9].pressed)
             {
                 this.#gamePadInput.shoot = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.shoot = false;
-            }
+        }
 
-            //SELECT
-            if (this.#gamepad.buttons[10].pressed)
+        //SELECT
+        if (this.#gamepad.buttons[10].pressed)
             {
                 this.#gamePadInput.select = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.select = false;
-            }
+        }
 
-            //START
-            if (this.#gamepad.buttons[11].pressed)
+        //START
+        if (this.#gamepad.buttons[11].pressed)
             {
                 this.#gamePadInput.start = true;
-            }
-            else
+        }
+        else
             {
                 this.#gamePadInput.start = false;
-            }
         }
 
         // Get axis states
@@ -223,5 +246,4 @@ export class LogicMaster
         this.#gamePadInput.rotationY = this.#gamepad.axes[4];
 
     }
-
 }

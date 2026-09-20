@@ -3,6 +3,7 @@ export class DataMaster
     #logicalWidth;
     #logicalHeight;
     #wireframeObjectList = new Array();
+    #projectileList = new Array();
     #player;
 
     constructor(logicalWidth, logicalHeight)
@@ -22,6 +23,12 @@ export class DataMaster
         this.#wireframeObjectList.push(wireframeObject);
     }
 
+    addProjectile(wireframeObject)
+    {
+        this.#wireframeObjectList.push(wireframeObject);
+        this.#projectileList.push(wireframeObject);
+    }
+
     setPlayer(player)
     {
         this.#player = player;
@@ -30,6 +37,16 @@ export class DataMaster
     getPlayer()
     {
         return this.#player;
+    }
+
+    getLogicalWidth()
+    {
+        return this.#logicalWidth;
+    }
+
+    getLogicalHeight()
+    {
+        return this.#logicalHeight;
     }
 
 }
