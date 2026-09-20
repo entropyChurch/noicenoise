@@ -12,35 +12,20 @@ export class WireframeObject
     #speed;
 
 
-    constructor(objectPositionX, objectPositionY, directionX, directionY, color)
+    constructor(objectPositionX, objectPositionY, color, speed)
     {
         this.#objectPositionX = objectPositionX;
         this.#objectPositionY = objectPositionY;
 
-        // Normalize the direction vector
-        const magnitude = Math.hypot(directionX, directionY);
-        if (magnitude > 0)
-        {
-            this.#directionX = directionX / magnitude;
-            this.#directionY = directionY / magnitude;
-        }
-        else
-        {
-            this.#directionX = 0;
-            this.#directionY = 0;
-        }
-        this.#directionX = directionX;
-        this.#directionY = directionY;
-
         this.#color = color;
         this.#coordinateList = new Array;
-        this.#speed = 0;
+        this.#speed = speed;
     }
 
     update(deltaTime)
     {
-        this.rotateObject(deltaTime)
         this.moveObject(deltaTime)
+        this.rotateObject(deltaTime)
     }
 
     calculateDirection(deltaTime)
@@ -84,10 +69,8 @@ export class WireframeObject
         this.#coordinateList.length = [];
     }
 
-    getCoordinateList()
-    {
-        return this.#coordinateList;
-    }
+    updateCoordinates()
+    {}
 
     getColor()
     {
@@ -114,7 +97,7 @@ export class WireframeObject
         return this.#objectPositionY;
     }
 
-    setObjectoPositonY(objectPositionY)
+    setObjectPositionY(objectPositionY)
     {
         this.#objectPositionY = objectPositionY;
     }
@@ -148,5 +131,29 @@ export class WireframeObject
     {
         return this.#speed;
     }
+
+    normalizeVector(x, y, stick)
+{
+    const length = Math.sqrt(x * x + y * y);
+    let deadzone = 0;
+
+    if (stick == "L")
+    {
+        deadzone = 0.05;
+    }
+
+    if (stick == "R")
+    {
+        deadzone = 0.15
+    }
+
+    if (length < deadzone)
+        return { x: 0, y: 0 };
+
+    return {
+        x: x / length,
+        y: y / length
+    };
+}
 }
 

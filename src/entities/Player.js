@@ -4,33 +4,79 @@ export class Player extends WireframeObject
 {
 
     #health;
-    #rotation;
     #playerInput;
+    #rotation;
 
-    constructor(positionX, positionY, velocityX, velocityY, color, health)
+    constructor(positionX, positionY, color, health, speed)
     {
-        super(positionX, positionY, velocityX, velocityY, color);
+        super(positionX, positionY, color, speed);
         this.#health = health;
-        this.addCoordinate(this.getObjectPositionX(), this.getObjectPositionY() - 50);
-        this.addCoordinate(this.getObjectPositionX() + 30, this.getObjectPositionY() + 20);
-        this.addCoordinate(this.getObjectPositionX(), this.getObjectPositionY());
-        this.addCoordinate(this.getObjectPositionX() - 30, this.getObjectPositionY() + 20);
-        this.#rotation = -Math.PI / 2;
+        this.#rotation = 0;
+        this.updateCoordinates();
     }
 
-    setPlayerInput()
+    setPlayerInput(playerInput)
     {
-        this.#playerInput = this.#playerInput;
+        this.#playerInput = playerInput;
     }
 
-    moveObject()
+    updateCoordinates()
     {
+        this.clearCoordinates();
 
-    }
+        const x = this.getObjectPositionX();
+        const y = this.getObjectPositionY();
 
-    rotateObject()
+        const rotation = this.#rotation;
+
+        const cos = Math.cos(rotation);
+        const sin = Math.sin(rotation);
+
+        const points = [
+            { x: 0, y: -25 },
+            { x: 15, y: 10 },
+            { x: 0, y: 0 },
+            { x: -15, y: 10 }
+        ];
+
+        for (const point of points)
+        {
+            const rotatedX = point.x * cos - point.y * sin;
+            const rotatedY = point.x * sin + point.y * cos;
+
+            this.addCoordinate(
+                x + rotatedX,
+                y + rotatedY
+            );
+        }
+    }  
+
+    moveObject(deltaTime)
     {
-        
+        const normalized = this.normalizeVector(this.#playerInput.movementX, this.#playerInput.movementY, "L")
+        this.setObjectPositionX(this.getObjectPositionX() + normalized.x * deltaTime * this.getSpeed());
+        this.setObjectPositionY(this.getObjectPositionY() + normalized.y * deltaTime * this.getSpeed());
+        this.updateCoordinates();
+    }   
+
+    rotateObject(deltaTime)
+    {
+        const normalized = this.normalizeVector(this.#playerInput.rotationX, this.#playerInput.rotationY, "R");
+
+        if (normalized.x === 0 && normalized.y === 0) return;
+
+        const targetRotation = Math.atan2(normalized.y, normalized.x) + Math.PI / 2;
+
+        let difference = targetRotation - this.#rotation;
+
+        // Keep difference between -PI and PI
+        difference = Math.atan2(Math.sin(difference),Math.cos(difference));
+
+        const rotationSpeed = 30;
+
+        this.#rotation += difference * rotationSpeed * deltaTime;
+
+        this.updateCoordinates();
     }
 
 }

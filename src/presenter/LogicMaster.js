@@ -34,7 +34,6 @@ export class LogicMaster
         this.#viewer = viewer;
         this.prepareStage();
         this.#previousTime = performance.now();
-        this.addKeyInputListeners();
         this.addControllerInputListener();
 
         // Start the recursive game loop
@@ -49,7 +48,7 @@ export class LogicMaster
 
         //Get Controller input
         this.getPlayerInput();
-        this.#model.getPlayer().setInput(this.#gamePadInput());
+        this.#model.getPlayer().setPlayerInput(this.#gamePadInput);
 
         // Do all the game logic
         this.#model.getPlayer().update(this.#deltaTime);
@@ -70,7 +69,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(250, 250, 0, 0, "white", 100, 100);
+        const player = new Player(0, 0, "white", 100, 100);
         player.setSpeed(500);
         this.#model.setPlayer(player);
     }
