@@ -24,12 +24,6 @@ export class WireframeObject
 
     update(deltaTime)
     {
-        this.moveObject(deltaTime)
-        this.rotateObject(deltaTime)
-    }
-
-    calculateDirection(deltaTime)
-    {
         // Implemented at specific entity level
     }
 
@@ -40,17 +34,7 @@ export class WireframeObject
 
     moveObject(deltaTime)
     {
-        const deltaX = this.#directionX * deltaTime * this.#speed;
-        const deltaY = this.#directionY * deltaTime * this.#speed;
-
-        this.#objectPositionX += deltaX;
-        this.#objectPositionY += deltaY;
-
-        for (const coordinate of this.#coordinateList)
-        {
-            coordinate.setPositionX(coordinate.getPositionX() + deltaX);
-            coordinate.setPositionY(coordinate.getPositionY() + deltaY);
-        }
+        // Implemented at specific entity level
     }
 
     addCoordinate(positionX, positionY)

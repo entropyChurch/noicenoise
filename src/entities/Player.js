@@ -20,6 +20,13 @@ export class Player extends WireframeObject
         this.#playerInput = playerInput;
     }
 
+    update(deltaTime)
+    {
+        this.moveObject(deltaTime);
+        this.rotateObject(deltaTime);
+        this.updateCoordinates();
+    }
+
     updateCoordinates()
     {
         this.clearCoordinates();
@@ -56,7 +63,6 @@ export class Player extends WireframeObject
         const normalized = this.normalizeVector(this.#playerInput.movementX, this.#playerInput.movementY, "L")
         this.setObjectPositionX(this.getObjectPositionX() + normalized.x * deltaTime * this.getSpeed());
         this.setObjectPositionY(this.getObjectPositionY() + normalized.y * deltaTime * this.getSpeed());
-        this.updateCoordinates();
     }   
 
     rotateObject(deltaTime)
@@ -75,8 +81,6 @@ export class Player extends WireframeObject
         const rotationSpeed = 30;
 
         this.#rotation += difference * rotationSpeed * deltaTime;
-
-        this.updateCoordinates();
     }
 
 }
