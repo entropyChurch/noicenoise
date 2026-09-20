@@ -49,13 +49,13 @@ export class LogicMaster
 
         //Get Controller input
         this.getPlayerInput();
+        this.#model.getPlayer().setInput(this.#gamePadInput());
 
         // Do all the game logic
         this.#model.getPlayer().update(this.#deltaTime);
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
-
 
         // Request the next frame
         requestAnimationFrame(() => this.frame());
@@ -73,26 +73,6 @@ export class LogicMaster
         const player = new Player(250, 250, 0, 0, "white", 100, 100);
         player.setSpeed(500);
         this.#model.setPlayer(player);
-    }
-
-    calculatePlayerMovementVector()
-    {
-        let x = 0;
-        let y = 0;
-
-        if (this.#keys.w)
-            y -= 1;
-
-        if (this.#keys.s)
-            y += 1;
-
-        if (this.#keys.a)
-            x -= 1;
-
-        if (this.#keys.d)
-            x += 1;
-
-        return { x, y };
     }
 
     addControllerInputListener()

@@ -39,9 +39,8 @@ export class WireframeObject
 
     update(deltaTime)
     {
-        this.calculateDirection(deltaTime)
         this.rotateObject(deltaTime)
-        this.updatePosition(deltaTime)
+        this.moveObject(deltaTime)
     }
 
     calculateDirection(deltaTime)
@@ -54,7 +53,7 @@ export class WireframeObject
         // Implemented at specific entity level
     }   
 
-    updatePosition(deltaTime)
+    moveObject(deltaTime)
     {
         const deltaX = this.#directionX * deltaTime * this.#speed;
         const deltaY = this.#directionY * deltaTime * this.#speed;
