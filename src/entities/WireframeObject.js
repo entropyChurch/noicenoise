@@ -54,7 +54,9 @@ export class WireframeObject
     }
 
     updateCoordinates()
-    {}
+    {
+        
+    }
 
     getColor()
     {
