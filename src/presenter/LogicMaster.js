@@ -18,11 +18,19 @@ export class LogicMaster
     
     #gamePadInput =         // Holds the game input mapped from gamepad state
     {
-        rotation: 0,
-        movement_direction: 0,
+        rotationX: 0,
+        rotationY: 0,
+        movementX: 0,
+        movementY: 0,
         shield: false,
         boost: false,
-        shoot: false
+        shoot: false,
+        red: false,
+        green: false,
+        blue: false,
+        yellow: false,
+        start: false,
+        select: false
     }          
 
     constructor(model, viewer, canvas)
@@ -68,7 +76,7 @@ export class LogicMaster
 
     prepareStage()
     {
-        const player = new Player(250, 250, 1, 0, "green", 100, 100);
+        const player = new Player(250, 250, 0, 0, "white", 100, 100);
         player.setSpeed(500);
         this.#model.setPlayer(player);
     }
@@ -129,17 +137,108 @@ export class LogicMaster
 
     getPlayerInput()
     {
+
+        // Layout for my 8-BitDO Pro 3 as referenced to an XBOX controller
+        // I need to add keymapping when first playing I guess
+
+        // Buttons
+        // 0 -> (A)     7 -> (R1)   14 -> (R3)
+        // 1 -> (B)     9 -> (R2)   13 -> (L3)
+        // 3 -> (X)     6 -> (L1)   10 -> (START)
+        // 4 -> (Y)     8 -> (L2)   11 -> (SELECT)
+
+        //Axis
+        //0 -> DPAD             3 -> RS - X-Axis    6 -> LT - Z-Axis
+        //1 -> LS - X-Axis      4 -> LS - Y-Axis
+        //2 -> LS - Y-Axis      5 -> RT - Z-Axis
+
         if (!this.#gamepad) 
         {
             console.log("No gamepad connected.");
             return;
         }
 
+        // Get button presses
         for (let i = 0; i<this.#gamepad.buttons.length; i++)
         {
-            if (this.#gamepad.buttons[i].pressed)
+            // GREEN
+            if (this.#gamepad.buttons[0].pressed)
             {
-                console.log(i);
+                this.#gamePadInput.green = true;
+            }
+            else
+            {
+                this.#gamePadInput.green = false;
+            }
+
+            // RED
+            if (this.#gamepad.buttons[1].pressed)
+            {
+                this.#gamePadInput.red = true;
+            }
+            else
+            {
+                this.#gamePadInput.red = false;
+            }
+
+            // BLUE
+            if (this.#gamepad.buttons[3].pressed)
+            {
+                this.#gamePadInput.blue = true;
+            }
+            else
+            {
+                this.#gamePadInput.blue = false;
+            }
+
+            //YELLOW
+            if (this.#gamepad.buttons[4].pressed)
+            {
+                this.#gamePadInput.yellow = true;
+            }
+            else
+            {
+                this.#gamePadInput.yellow = false;
+            }
+                       
+            // SHIELD
+            if (this.#gamepad.buttons[8].pressed)
+            {
+                this.#gamePadInput.shield = true;
+            }
+            else
+            {
+                this.#gamePadInput.shield = false;
+            }
+            
+            // BOOST
+            if (this.#gamepad.buttons[9].pressed)
+            {
+                this.#gamePadInput.boost = true;
+            }
+            else
+            {
+                this.#gamePadInput.boost = false;
+            }
+
+            //SELECT
+            if (this.#gamepad.buttons[10].pressed)
+            {
+                this.#gamePadInput.select = true;
+            }
+            else
+            {
+                this.#gamePadInput.select = false;
+            }
+
+            //START
+            if (this.#gamepad.buttons[11].pressed)
+            {
+                this.#gamePadInput.start = true;
+            }
+            else
+            {
+                this.#gamePadInput.start = false;
             }
         }
     }
