@@ -14,6 +14,16 @@ export class LogicMaster
         s: false,
         d: false
     };
+    #gamepad;               // Holds the gamepad state
+    
+    #gamePadInput =         // Holds the game input mapped from gamepad state
+    {
+        rotation: 0,
+        movement_direction: 0,
+        shield: false,
+        boost: false,
+        shoot: false
+    }          
 
     constructor(model, viewer, canvas)
     {
@@ -23,6 +33,7 @@ export class LogicMaster
         this.prepareStage();
         this.#previousTime = performance.now();
         this.addKeyInputListeners();
+        this.addControllerInputListener();
 
         // Start the recursive game loop
         requestAnimationFrame(() => this.frame());
@@ -32,7 +43,10 @@ export class LogicMaster
     frame()
     {
         //Calculate delta time in seconds
-        this.#deltaTime = this.calculateDeltaTime(performance.now())
+        this.#deltaTime = this.calculateDeltaTime(performance.now());
+
+        //Get Controller input
+        this.getPlayerInput();
 
         // Do all the game logic
         this.#model.getPlayer().update(this.#deltaTime);
@@ -97,4 +111,37 @@ export class LogicMaster
                 this.#model.getPlayer().setInputMovementVector(moveVector.x, moveVector.y)
             })
     }
+
+    addControllerInputListener()
+    {
+        window.addEventListener("gamepadconnected", (e) => 
+        {
+            console.log("Gamepad connected.");
+            this.#gamepad = navigator.getGamepads()[e.gamepad.index];
+        });
+
+        window.addEventListener("gamepaddisconnected", (e) => 
+        {
+            console.log
+            ("Gamepad disconnected.");
+        });
+    }
+
+    getPlayerInput()
+    {
+        if (!this.#gamepad) 
+        {
+            console.log("No gamepad connected.");
+            return;
+        }
+
+        for (let i = 0; i<this.#gamepad.buttons.length; i++)
+        {
+            if (this.#gamepad.buttons[i].pressed)
+            {
+                console.log(i);
+            }
+        }
+    }
+
 }
