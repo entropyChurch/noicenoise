@@ -7,14 +7,7 @@ export class LogicMaster
     #viewer;                //  Holds the canvas and render functions
     #previousTime;          //  Time of the previous frame
     #deltaTime;             //  Delta of last and current frame
-    #keys = 
-    {
-        w: false,
-        a: false,
-        s: false,
-        d: false
-    };
-    #gamepad;               // Holds the gamepad state
+    #gamepad;               //  Holds the gamepad reference
     
     #gamePadInput =         // Holds the game input mapped from gamepad state
     {
@@ -100,25 +93,6 @@ export class LogicMaster
             x += 1;
 
         return { x, y };
-    }
-
-    addKeyInputListeners()
-    {
-        window.addEventListener("keydown", (event) => 
-            {
-                if (event.key in this.#keys)
-                    this.#keys[event.key] = true;
-                const moveVector = this.calculatePlayerMovementVector();
-                this.#model.getPlayer().setInputMovementVector(moveVector.x, moveVector.y)
-            })
-
-        window.addEventListener("keyup", (event) => 
-            {
-                if (event.key in this.#keys)
-                    this.#keys[event.key] = false;
-                const moveVector = this.calculatePlayerMovementVector();
-                this.#model.getPlayer().setInputMovementVector(moveVector.x, moveVector.y)
-            })
     }
 
     addControllerInputListener()
@@ -262,6 +236,13 @@ export class LogicMaster
                 this.#gamePadInput.start = false;
             }
         }
+
+        // Get axis states
+        this.#gamePadInput.movementX = this.#gamepad.axes[1];
+        this.#gamePadInput.movementY = this.#gamepad.axes[2];
+        this.#gamePadInput.rotationX = this.#gamepad.axes[3];
+        this.#gamePadInput.rotationY = this.#gamepad.axes[4];
+
     }
 
 }
