@@ -24,6 +24,7 @@ export class LogicMaster
         movementY: 0,
         shield: false,
         boost: false,
+        special: false,
         shoot: false,
         red: false,
         green: false,
@@ -200,9 +201,19 @@ export class LogicMaster
             {
                 this.#gamePadInput.yellow = false;
             }
-                       
+                      
+            // SPECIAL
+            if (this.#gamepad.buttons[6].pressed)
+            {
+                this.#gamePadInput.special= true;
+            }
+            else
+            {
+                this.#gamePadInput.special = false;
+            }
+
             // SHIELD
-            if (this.#gamepad.buttons[8].pressed)
+            if (this.#gamepad.buttons[7].pressed)
             {
                 this.#gamePadInput.shield = true;
             }
@@ -210,15 +221,25 @@ export class LogicMaster
             {
                 this.#gamePadInput.shield = false;
             }
-            
+
             // BOOST
-            if (this.#gamepad.buttons[9].pressed)
+            if (this.#gamepad.buttons[8].pressed)
             {
                 this.#gamePadInput.boost = true;
             }
             else
             {
                 this.#gamePadInput.boost = false;
+            }
+            
+            // SHOOT
+            if (this.#gamepad.buttons[9].pressed)
+            {
+                this.#gamePadInput.shoot = true;
+            }
+            else
+            {
+                this.#gamePadInput.shoot = false;
             }
 
             //SELECT
