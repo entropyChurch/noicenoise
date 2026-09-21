@@ -74,10 +74,17 @@ export class LogicMaster
             this.#lastBullet = bulletTryTime;
         }
 
-        // Move the player
-        this.#model.getPlayer().update(this.#deltaTime, this.#model.getLogicalWidth(), this.#model.getLogicalHeight());
-
         //Destroy all non seen objects
+        this.#model.setWireframeObjectList
+        (
+            this.cullObjectsOutOfBounds
+            (
+                this.#model.getWireframeObjectList,
+                this.#model.getLogicalWidth,
+                this.#model.getLogicalWidth
+            )
+        )
+
         let culledList = this.#model.getWireframeObjectList();
         const logHeight = this.#model.getLogicalHeight();
         const logWidth = this.#model.getLogicalWidth();
@@ -96,6 +103,11 @@ export class LogicMaster
                 }
             }
             this.#model.setWireframeObjectList(culledList); 
+
+        // Move the player
+        this.#model.getPlayer().update(this.#deltaTime, this.#model.getLogicalWidth(), this.#model.getLogicalHeight());
+
+        // Move everything else
 
         // Update all the other objects
         for (const wireframeObject of this.#model.getWireframeObjectList())
@@ -272,5 +284,25 @@ export class LogicMaster
         this.#gamePadInput.rotationX = this.#gamepad.axes[3];
         this.#gamePadInput.rotationY = this.#gamepad.axes[4];
 
+    }
+
+    cullObjectsOutOfBounds(wireframeObjectList, logWidth, logHeight)
+    {
+        let culledList = wireframeObjectList;
+
+            for (let i = culledList.length -1; i >= 0; i--)
+            {
+                if
+                (
+                    culledList[i].getObjectPositionX() > logWidth + 100 ||
+                    culledList[i].getObjectPositionX() < -100 ||
+                    culledList[i].getObjectPositionY() > logHeight + 100 ||
+                    culledList[i].getObjectPositionY() < -100
+                )
+                {
+                    culledList.splice(i,1);
+                }
+            }
+        return culledList;
     }
 }
