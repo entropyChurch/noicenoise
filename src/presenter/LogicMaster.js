@@ -9,6 +9,7 @@ export class LogicMaster
     #previousTime;          //  Time of the previous frame
     #deltaTime;             //  Delta of last and current frame
     #gamepad;               //  Holds the gamepad reference
+    #lastBullet;            //  Holds the time of the last fired bullet
     
     #gamePadInput =         // Holds the game input mapped from gamepad state
     {
@@ -35,6 +36,7 @@ export class LogicMaster
         this.#viewer = viewer;
         this.prepareStage();
         this.#previousTime = performance.now();
+        this.#lastBullet = performance.now();
         this.addControllerInputListener();
 
         // Start the recursive game loop
@@ -51,26 +53,49 @@ export class LogicMaster
         this.getPlayerInput();
         this.#model.getPlayer().setPlayerInput(this.#gamePadInput);
 
-        // Do all player input actions that or NOT movement
-        if (this.#gamePadInput.shoot)
+        // Do all player input actions that are NOT movement
+        const bulletTryTime = performance.now();
+        const deltaBullet = bulletTryTime - this.#lastBullet;
+        if (this.#gamePadInput.shoot && deltaBullet > this.#model.getPlayer().getBulletCooldown())
         {
-            this.#model.addProjectile
+            this.#model.addWireframeObject
             (
                 new Bullet
                 (
                     this.#model.getPlayer().getObjectPositionX(),
                     this.#model.getPlayer().getObjectPositionY(),
                     "white",
-                    1000,
+                    1500,
                     this.#model.getPlayer().getCoordinateList()[0].getPositionX(),
                     this.#model.getPlayer().getCoordinateList()[0].getPositionY(),
                     "true"
                 )
             );
+            this.#lastBullet = bulletTryTime;
         }
 
         // Move the player
         this.#model.getPlayer().update(this.#deltaTime, this.#model.getLogicalWidth(), this.#model.getLogicalHeight());
+
+        //Destroy all non seen objects
+        let culledList = this.#model.getWireframeObjectList();
+        const logHeight = this.#model.getLogicalHeight();
+        const logWidth = this.#model.getLogicalWidth();
+
+            for (let i = culledList.length -1; i >= 0; i--)
+            {
+                if
+                (
+                    culledList[i].getObjectPositionX() > logWidth + 100 ||
+                    culledList[i].getObjectPositionX() < -100 ||
+                    culledList[i].getObjectPositionY() > logHeight + 100 ||
+                    culledList[i].getObjectPositionY() < -100
+                )
+                {
+                    culledList.splice(i,1);
+                }
+            }
+            this.#model.setWireframeObjectList(culledList); 
 
         // Update all the other objects
         for (const wireframeObject of this.#model.getWireframeObjectList())
@@ -81,6 +106,8 @@ export class LogicMaster
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
 
+        console.log("Objects on screen: " + (this.#model.getWireframeObjectList().length + 1));
+            
         // Request the next frame
         requestAnimationFrame(() => this.frame());
     }

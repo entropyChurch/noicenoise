@@ -6,6 +6,7 @@ export class Player extends WireframeObject
     #health;
     #playerInput;
     #rotation;
+    #bulletCooldown;
 
     constructor(positionX, positionY, color, health, speed)
     {
@@ -13,11 +14,22 @@ export class Player extends WireframeObject
         this.#health = health;
         this.#rotation = 0;
         this.updateCoordinates();
+        this.#bulletCooldown = 100;
     }
 
     setPlayerInput(playerInput)
     {
         this.#playerInput = playerInput;
+    }
+
+    setBulletCooldown(bulletCooldown)
+    {
+        this.#bulletCooldown = bulletCooldown;
+    }
+
+    getBulletCooldown()
+    {
+        return this.#bulletCooldown;
     }
 
     update(deltaTime, boundaryX, boundaryY)
@@ -64,7 +76,7 @@ export class Player extends WireframeObject
         let speed = this.getSpeed();
         if (this.#playerInput.boost == true)
         {
-            speed = speed * 1.5
+            speed = speed * 2
         }
         let calculatedPositionX = this.getObjectPositionX() + normalized.x * deltaTime * speed;
         let calculatedPositionY = this.getObjectPositionY() + normalized.y * deltaTime * speed;

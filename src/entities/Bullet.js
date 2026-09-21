@@ -62,7 +62,6 @@ export class Bullet extends WireframeObject
 
     moveObject(deltaTime)
     {
-        console.log(this.getSpeed())
         this.setObjectPositionX(this.getObjectPositionX() + this.#directionX * this.getSpeed() * deltaTime);
         this.setObjectPositionY(this.getObjectPositionY() + this.#directionY * this.getSpeed() * deltaTime);
     }
