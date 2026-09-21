@@ -54,25 +54,7 @@ export class LogicMaster
         this.#model.getPlayer().setPlayerInput(this.#gamePadInput);
 
         // Do all player input actions that are NOT movement
-        const bulletTryTime = performance.now();
-        const deltaBullet = bulletTryTime - this.#lastBullet;
-        if (this.#gamePadInput.shoot && deltaBullet > this.#model.getPlayer().getBulletCooldown())
-        {
-            this.#model.addWireframeObject
-            (
-                new Bullet
-                (
-                    this.#model.getPlayer().getObjectPositionX(),
-                    this.#model.getPlayer().getObjectPositionY(),
-                    "white",
-                    1500,
-                    this.#model.getPlayer().getCoordinateList()[0].getPositionX(),
-                    this.#model.getPlayer().getCoordinateList()[0].getPositionY(),
-                    "true"
-                )
-            );
-            this.#lastBullet = bulletTryTime;
-        }
+        this.shoot();
 
         //Destroy all non seen objects
         this.#model.setWireframeObjectList
@@ -95,6 +77,8 @@ export class LogicMaster
         {
             wireframeObject.update(this.#deltaTime);
         }
+
+        // Check for collisions
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
@@ -285,5 +269,28 @@ export class LogicMaster
                 }
             }
             return culledList;
+    }
+
+    shoot()
+    {
+        const bulletTryTime = performance.now();
+        const deltaBullet = bulletTryTime - this.#lastBullet;
+        if (this.#gamePadInput.shoot && deltaBullet > this.#model.getPlayer().getBulletCooldown())
+        {
+            this.#model.addWireframeObject
+            (
+                new Bullet
+                (
+                    this.#model.getPlayer().getObjectPositionX(),
+                    this.#model.getPlayer().getObjectPositionY(),
+                    "white",
+                    1500,
+                    this.#model.getPlayer().getCoordinateList()[0].getPositionX(),
+                    this.#model.getPlayer().getCoordinateList()[0].getPositionY(),
+                    "true"
+                )
+            );
+            this.#lastBullet = bulletTryTime;
+        }
     }
 }
