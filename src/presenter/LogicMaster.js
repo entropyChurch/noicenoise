@@ -79,6 +79,7 @@ export class LogicMaster
         }
 
         // Check for collisions
+        this.collisionDetection()
 
         // Render the current gamestate
         this.#viewer.render(this.#model.getWireframeObjectList(), this.#model.getPlayer());
@@ -293,4 +294,191 @@ export class LogicMaster
             this.#lastBullet = bulletTryTime;
         }
     }
+
+    collisionDetection()
+    {
+        const wireframeObjectList = this.#model.getWireframeObjectList();
+        const logWidth = this.#model.getLogicalWidth();
+        const logHeight = this.#model.getLogicalHeight();
+
+        const sectorA1 = new Array();
+        const sectorA2 = new Array();
+        const sectorA3 = new Array();
+        const sectorA4 = new Array();
+
+        const sectorB1 = new Array();
+        const sectorB2 = new Array();
+        const sectorB3 = new Array();
+        const sectorB4 = new Array();
+
+        const sectorC1 = new Array();
+        const sectorC2 = new Array();
+        const sectorC3 = new Array();
+        const sectorC4 = new Array();
+
+        const sectorD1 = new Array();
+        const sectorD2 = new Array();
+        const sectorD3 = new Array();
+        const sectorD4 = new Array();
+
+        // Do all the objects
+        for (const wireFrameObject of wireframeObjectList)
+        {
+            for (const coordinate of wireFrameObject.getCoordinateList())
+            {
+                const pX = coordinate.getPositionX();
+                const pY = coordinate.getPositionY();
+                
+                let column = "";
+                let row = "";
+
+                if (pX > 0.25 * logWidth)
+                {
+                    if (pX > 0.5 * logWidth)
+                    {
+                        if (pX > 0.75 * logWidth)
+                        {
+                            column = "D"
+                        }
+                        else
+                        {
+                            column = "C"
+                        }
+                    }
+                    else
+                    {
+                        column = "B"
+                    }
+                }
+                else
+                {
+                    column = "A"
+                }
+
+                if (pY > 0.25 * logHeight)
+                {
+                    if (pY > 0.5 * logHeight)
+                    {
+                        if (pY > 0.75 * logHeight)
+                        {
+                            row = "4"
+                        }
+                        else
+                        {
+                            row = "3"
+                        }
+                    }
+                    else
+                    {
+                        row = "2"
+                    }
+                }
+                else
+                {
+                    row = "1"
+                }
+
+                console.log(column + row);
+
+                if (column == "A" && row == "1")
+                {
+                    if (!sectorA1.includes(wireFrameObject))
+                        {sectorA1.push(wireFrameObject)}
+                }
+
+                if (column == "A" && row == "2")
+                {
+                    if (!sectorA2.includes(wireFrameObject))
+                        {sectorA2.push(wireFrameObject)}
+                }
+
+                if (column == "A" && row == "3")
+                {
+                    if (!sectorA3.includes(wireFrameObject))
+                        {sectorA3.push(wireFrameObject)}
+                }
+
+                if (column == "A" && row == "4")
+                {
+                    if (!sectorA4.includes(wireFrameObject))
+                        {sectorA4.push(wireFrameObject)}
+                }
+
+                if (column == "B" && row == "1")
+                {
+                    if (!sectorB1.includes(wireFrameObject))
+                        {sectorB1.push(wireFrameObject)}
+                }
+
+                if (column == "B" && row == "2")
+                {
+                    if (!sectorB2.includes(wireFrameObject))
+                        {sectorB2.push(wireFrameObject)}
+                }
+
+                if (column == "B" && row == "3")
+                {
+                    if (!sectorB3.includes(wireFrameObject))
+                        {sectorB3.push(wireFrameObject)}
+                }
+
+                if (column == "B" && row == "4")
+                {
+                    if (!sectorB4.includes(wireFrameObject))
+                        {sectorB4.push(wireFrameObject)}
+                }
+
+                if (column == "C" && row == "1")
+                {
+                    if (!sectorC1.includes(wireFrameObject))
+                        {sectorC1.push(wireFrameObject)}
+                }
+
+                if (column == "C" && row == "2")
+                {
+                    if (!sectorC2.includes(wireFrameObject))
+                        {sectorC2.push(wireFrameObject)}
+                }
+
+                if (column == "C" && row == "3")
+                {
+                    if (!sectorC3.includes(wireFrameObject))
+                        {sectorC3.push(wireFrameObject)}
+                }
+
+                if (column == "C" && row == "4")
+                {
+                    if (!sectorC4.includes(wireFrameObject))
+                        {sectorC4.push(wireFrameObject)}
+                }
+
+                if (column == "D" && row == "1")
+                {
+                    if (!sectorD1.includes(wireFrameObject))
+                        {sectorD1.push(wireFrameObject)}
+                }
+
+                if (column == "D" && row == "2")
+                {
+                    if (!sectorD2.includes(wireFrameObject))
+                        {sectorD2.push(wireFrameObject)}
+                }
+
+                if (column == "D" && row == "3")
+                {
+                    if (!sectorD3.includes(wireFrameObject))
+                        {sectorD3.push(wireFrameObject)}
+                }
+
+                if (column == "D" && row == "4")
+                {
+                    if (!sectorD4.includes(wireFrameObject))
+                        {sectorD4.push(wireFrameObject)}
+                }
+            }   
+        }
+
+        // Do the player
+        
+    } 
 }
