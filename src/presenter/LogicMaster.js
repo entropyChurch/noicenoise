@@ -79,30 +79,11 @@ export class LogicMaster
         (
             this.cullObjectsOutOfBounds
             (
-                this.#model.getWireframeObjectList,
-                this.#model.getLogicalWidth,
-                this.#model.getLogicalWidth
+                this.#model.getWireframeObjectList(),
+                this.#model.getLogicalWidth(),
+                this.#model.getLogicalWidth()
             )
         )
-
-        let culledList = this.#model.getWireframeObjectList();
-        const logHeight = this.#model.getLogicalHeight();
-        const logWidth = this.#model.getLogicalWidth();
-
-            for (let i = culledList.length -1; i >= 0; i--)
-            {
-                if
-                (
-                    culledList[i].getObjectPositionX() > logWidth + 100 ||
-                    culledList[i].getObjectPositionX() < -100 ||
-                    culledList[i].getObjectPositionY() > logHeight + 100 ||
-                    culledList[i].getObjectPositionY() < -100
-                )
-                {
-                    culledList.splice(i,1);
-                }
-            }
-            this.#model.setWireframeObjectList(culledList); 
 
         // Move the player
         this.#model.getPlayer().update(this.#deltaTime, this.#model.getLogicalWidth(), this.#model.getLogicalHeight());
@@ -303,6 +284,6 @@ export class LogicMaster
                     culledList.splice(i,1);
                 }
             }
-        return culledList;
+            return culledList;
     }
 }
